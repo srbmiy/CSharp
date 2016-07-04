@@ -46,7 +46,6 @@ namespace TreeViewSample
         {
             ViewModel = this.DataContext as ViewModel;
             this.ItemsSource = ViewModel.ViewItems;
-
         }
 
         public ViewModel ViewModel
@@ -57,42 +56,70 @@ namespace TreeViewSample
 
         public virtual void OnGotFocus(object sender, RoutedEventArgs e)
         {
-            var item = new TreeViewItem();
-            item.Header = "Added : ";
-            var subitem = new TreeViewItem();
-            subitem.Header = System.DateTime.Now.ToString();
-            subitem.ToolTip = System.DateTime.Now.ToString();
-            item.Items.Add(subitem);
-
-            var item2 = new TreeViewItem();
-            var monitorItem = new MonitorItem("D0", "999999");
-            item2.Header = monitorItem;
-
-            var item3 = new TreeViewItem();
-            var group = new MonitorItemsGroup("[ Initial ]");
-            group.MonitorItems.Add(monitorItem);
-            item3.Header = group;
-
-            ViewModel.ViewItems.Add(item);
-            ViewModel.ViewItems.Add(item2);
-            ViewModel.ViewItems.Add(item3);
         }
     }
 
     public class ViewModel
     {
+        private TimerAgent tagent = new TimerAgent();
+
         public ViewModel()
         {
-            var item = new TreeViewItem();
-            item.Header = "aaaaaaaa";
-            viewItems.Add(item);
+            tagent.Elapsed += new EventHandler(OnTimerElapsed);
+
+            var monitorItem = new MonitorItem("Elapsed counter", "0");
+            var monitorItem2 = new MonitorItem("Elapsed counter2", "1000");
+
+            var group = new MonitorItemsGroup("[ Initial ]");
+            group.MonitorItems.Add(monitorItem);
+            group.MonitorItems.Add(monitorItem2);
+
+            var group2 = new MonitorItemsGroup("[ Initial2 ]");
+
+            ViewItems.Add(group);
+            ViewItems.Add(group2);
         }
 
-        protected ObservableCollection<TreeViewItem> viewItems = new ObservableCollection<TreeViewItem>();
+        protected ObservableCollection<MonitorItemsGroup> viewItems = new ObservableCollection<MonitorItemsGroup>();
 
-        public ObservableCollection<TreeViewItem> ViewItems
+        public ObservableCollection<MonitorItemsGroup> ViewItems
         {
             get { return viewItems; }
         }
+
+        public void OnTimerElapsed(object sender, EventArgs e)
+        {
+            foreach(var item in ViewItems)
+            {
+                var mon = item as MonitorItemsGroup;
+                if(mon != null)
+                {
+                    foreach(var monitorItem in mon.MonitorItems)
+                    {
+                        monitorItem.Value = (int.Parse(monitorItem.Value) + 1).ToString();
+                    }
+                }
+            }
+        }
     }
+
+    public class TimerAgent
+    {
+        public event EventHandler Elapsed;
+
+        private System.Windows.Threading.DispatcherTimer dispatcherThread = new System.Windows.Threading.DispatcherTimer();
+
+        public TimerAgent()
+        {
+            dispatcherThread.Interval = new System.TimeSpan(1000);
+            dispatcherThread.Tick += new EventHandler(OnTimer);
+            dispatcherThread.Start();
+        }
+
+        public void OnTimer(object sender, EventArgs e)
+        {
+            Elapsed(sender, e);
+        }
+    }
+
 }

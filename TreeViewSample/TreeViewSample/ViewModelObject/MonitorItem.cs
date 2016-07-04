@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace TreeViewSample.ViewModelObject
 {
-    class MonitorItem : INotifyPropertyChanged, IDisposable
+    public class MonitorItem : INotifyPropertyChanged, IDisposable
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -23,16 +24,47 @@ namespace TreeViewSample.ViewModelObject
 
         }
 
+        private string variableString;
         public string Variable
         {
-            get;
-            set;
+            get { return variableString ; }
+            set
+            {
+                if (variableString == value) return;
+                variableString = value;
+                OnPropertyChanged("Variable");
+            }
         }
 
+        private string valueString;
         public string Value
         {
-            get;
-            set;
+            get { return valueString; }
+            set
+            {
+                if(valueString == value) return;
+                valueString = value;
+                OnPropertyChanged("Value");
+            }
+        }
+
+        private bool isSelected;
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set
+            {
+                if (isSelected == value) return;
+                isSelected = value;
+                OnPropertyChanged("IsSelected");
+            }
+        }
+
+
+        public void OnPropertyChanged(String propertyName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

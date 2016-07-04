@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:TreeViewSample"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525"
-        GotFocus="OnGotFocus"
+        GotFocus="OnGotFocus" 
        >
-    <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+    <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" d:DataContext="{d:DesignInstance local:ViewModel}">
         <local:MainTreeView x:Name="TreeViewControl"/>
     </ScrollViewer>
 </Window>

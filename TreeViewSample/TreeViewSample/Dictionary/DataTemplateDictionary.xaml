@@ -4,18 +4,18 @@
                     xmlns:objects="clr-namespace:TreeViewSample.ViewModelObject"
                     >
     <DataTemplate DataType="{x:Type objects:MonitorItem}">
-        <Border BorderBrush="Red" BorderThickness="1" Padding="5">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Variable}" VerticalAlignment="Center"/>
-                <TextBlock Text=" = " />
-                <TextBlock Text="{Binding Value}" VerticalAlignment="Center" Foreground="Blue" />
-            </StackPanel>
-        </Border>
+        <TreeViewItem IsSelected="{Binding IsSelected}">
+            <TreeViewItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Variable}" VerticalAlignment="Center"/>
+                    <TextBlock Text=" = " />
+                    <TextBlock Text="{Binding Value}" VerticalAlignment="Center" Foreground="Blue"/>
+                </StackPanel>
+            </TreeViewItem.Header>
+        </TreeViewItem>
     </DataTemplate>
     <DataTemplate DataType="{x:Type objects:MonitorItemsGroup}">
-        <Border BorderBrush="Cyan" BorderThickness="1" Padding="5">
-            <TreeViewItem Header="{Binding GroupName}" ItemsSource="{Binding MonitorItems}">
-            </TreeViewItem>
-        </Border>
+        <TreeViewItem Header="{Binding GroupName}" ItemsSource="{Binding MonitorItems}" IsSelected="{Binding IsSelected}">
+        </TreeViewItem>
     </DataTemplate>
 </ResourceDictionary>

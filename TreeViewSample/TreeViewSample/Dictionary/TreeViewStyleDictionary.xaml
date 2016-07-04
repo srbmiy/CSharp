@@ -7,7 +7,7 @@
                 <ControlTemplate TargetType="TreeViewItem" xmlns:s="clr-namespace:System;assembly=mscorlib">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" MinWidth="19" />
+                            <ColumnDefinition Width="Auto" MinWidth="0" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
@@ -15,7 +15,7 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <ToggleButton IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent},Path=IsExpanded,Mode=TwoWay}" ClickMode="Press" Name="Expander">
+                        <ToggleButton IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent},Path=IsExpanded,Mode=TwoWay}" ClickMode="Press" Name="Expander" Visibility="Collapsed">
                             <ToggleButton.Style>
                                 <Style TargetType="ToggleButton">
                                     <Style.Resources>
@@ -28,12 +28,12 @@
                                     </Setter>
                                     <Setter Property="FrameworkElement.Width">
                                         <Setter.Value>
-                                            <s:Double>16</s:Double>
+                                            <s:Double>14</s:Double>
                                         </Setter.Value>
                                     </Setter>
                                     <Setter Property="FrameworkElement.Height">
                                         <Setter.Value>
-                                            <s:Double>16</s:Double>
+                                            <s:Double>1</s:Double>
                                         </Setter.Value>
                                     </Setter>
                                     <Setter Property="Control.Template">
